@@ -8,11 +8,13 @@
 % FAM: Fleet Allocation Problem ( Standard Formulation)
 %--------------------------------------------------------------------------
 
-function [ObjFun, Aeq, beq, Aineq, bineq, UB, LB] = FAM
+function P_FAM = FAM
+
+% The size of this problem is for ndv_FAM
 
 
 % Load data for the problem
-load('Data2_prob1.mat')
+load('Data_FAM.mat')
 
 % Decision variables
 %--------------------------------------------------------------------------
@@ -28,8 +30,7 @@ i = 0;
 for k = 1:nK
    
     ObjFun(i+1:i+F(k).nL) = L.c(F(k).L,k);
-    i = F(k).nL;
-    
+    i = F(k).nL;   
     
 end
 
@@ -53,54 +54,52 @@ b7 = ones(nL,1);
 
 % C8
 %--------------------------------------------------------------------------
-ma = 2*sum([N.n]);
-na = ndv; 
-A8 = zeros(ma,na);
+ma = sum([N.n]);
+A8 = zeros(ma,ndv);
 b8 = zeros(ma,1);
 
-% Nodes of flight legs
 ia = 0;
-ja = 0;
-for k=1:nK                 
-        A = zeros(N(k).n, F(k).nL );
+jaf = 0;
+jag = 0;
+for k=1:nK    
+    
+        Af = zeros(N(k).n, F(k).nL );
         
+        % Nodes of flight legs
         for i=1:F(k).nL
-        A(F(k).O(i),i) = 1;
-        A(F(k).I(i),i) = -1;
+        Af(F(k).O(i),i) = 1;
+        Af(F(k).I(i),i) = -1;
         end
-        A8(ia+1:ia+N(k).n, ja+1:ja+F(k).nL) = A;
-        [ma, na] = size(A);
-        ia = ia+ma;
-        ja = ja+na;
-
-end
-
-
-% Nodes of ground legs
-for k=1:nK                 
-        A = zeros(N(k).n, G(k).nG + NG(k).nG );
         
+        Ag = zeros(N(k).n, G(k).nG + NG(k).nG );
+        
+        % Nodes of ground legs
         for i=1:G(k).nG
-        A(G(k).arc(i,1),i) = 1;
-        A(G(k).arc(i,2),i) = -1;
+        Ag(G(k).arc(i,1),i) = 1;
+        Ag(G(k).arc(i,2),i) = -1;
         end
+        % Nodes of night ground legs
         for i=1:NG(k).nG
-        A(NG(k).arc(i,1),i) = 1;
-        A(NG(k).arc(i,2),i) = -1;
-        end
-        A8(ia+1:ia+N(k).n, ja+1:ja+G(k).nG+NG(k).nG) = A;
-        [ma, na] = size(A);
+        Ag(NG(k).arc(i,1),i) = 1;
+        Ag(NG(k).arc(i,2),i) = -1;
+        end      
+        
+        A8(ia+1:ia+N(k).n, jaf+1:jaf+F(k).nL) = Af;
+        A8(ia+1:ia+N(k).n, jag+1:jag+G(k).nG+NG(k).nG) = Ag;
+        [ma, naf] = size(Af);
+        [~, nag] = size(Ag);
         ia = ia+ma;
-        ja = ja+na;
+        jaf = jaf+naf;
+        jag = jag+nag;
 
 end
 
 Aeq = A7;
 beq = b7;
-[m7,n] = size(Aeq);
-[m8,~] = size(Aeq);
+[m7,n] = size(A7);
+[m8,~] = size(A8);
 Aeq(m7+1:m7+m8,1:n) = A8;
-beq(m7+1:m7+m8,1:n) = b8;
+beq(m7+1:m7+m8) = b8;
 
 
 % Inequality constraints
@@ -119,6 +118,44 @@ b9 = K.units;
 
 Aineq = A9;
 bineq = b9;
+
+% C10
+%--------------------------------------------------------------------------
+A10 = zeros(nL,ndv);
+I = eye(nL);
+i=0;
+for k = 1:nK
+    
+A10(:,i+1:i+F(k).nL) = - K.seats(k) .* I(:,F(k).L);
+i = F(k).nL;
+end
+% Legs between Hub airports have different capacities
+[ia,ja] = find(A10(H,:)~=0);
+for i=1:length(ia)
+    for j=1:length(ja)
+        A10(ia(i),ja(j)) = - 4*54; % 4 buses with 54 seats each
+    end
+end
+
+
+
+
+% Boundaries
+%--------------------------------------------------------------------------
+LB = zeros(ndv,1);
+UB = ones(ndv,1); UB(nf+1:end)=Inf;
+
+%--------------------------------------------------------------------------
+
+P_FAM.ndv = ndv;
+P_FAM.ObjFun =ObjFun;
+P_FAM.Aeq = Aeq;
+P_FAM.beq = beq;
+P_FAM.Aineq = Aineq;
+P_FAM.bineq = bineq;
+P_FAM.UB = UB;
+P_FAM.LB = LB;
+P_FAM.A10 = A10;
 
 end
 

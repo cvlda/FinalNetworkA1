@@ -2,10 +2,10 @@
 %
 % TU Delft 2018
 %
-% JohannL Korte
+% Johanna Korte
 % Carmen Velarde
 %--------------------------------------------------------------------------
-% DATA
+% DATA FAM
 %--------------------------------------------------------------------------
 
 clear all; close all; clc;
@@ -59,27 +59,6 @@ nAp = length(Apset);
 for k = 1:nK
     A_lk(:,k) = not(strcmp(Flight_txt(:,5+k),'NA'));
 end
-
-
-
-
-% % % Nodes:
-% % %--------------------------------------------------------------------------
-% %     N.t(1:nL) = O.t;
-% %     N.l(1:nL) = O.l;
-% % p=nL;
-% % for i=1:nL
-% %     
-% %     j=find(( O.t == I.t(i)) & ( strcmp(O.l,I.l(i))));
-% %     if isempty(j)
-% %         p=p+1;
-% %            N.t(p) = I.t(i);
-% %            N.l(p) = I.l(i);
-% %     end
-% %    
-% % end
-% % n = length(N.t);
-
 
 % Nodes (N(k).t / N(k).l) and flight legs (F(k).L) associated to fleet:
 %--------------------------------------------------------------------------
@@ -168,9 +147,23 @@ for k = 1:nK
 end
        
 
+% Separate ground arcs between Hub airports
+% -------------------------------------------------------------------------- 
+Hub = {'AEP', 'EZE'};
+
+iground = 0;
+for i = 1:nL
+    
+    % Ground legs:
+    if (sum(strcmp(Flight_raw(i,2:3), Hub)) == 2) ||  (sum(strcmp(Flight_raw(i,2:3), fliplr(Hub))) == 2)
+        iground = iground+1;
+        H(iground) = i;
+    end
+end
 
 
-% % 
+% Separate ground arcs between airports
+% -------------------------------------------------------------------------- 
 % % Hub = {'AEP', 'EZE'};
 % % iflight = 0;
 % % iground = 0;
@@ -179,9 +172,10 @@ end
 % %     % Flight assigned to fleet
 % %     j = find((A_lk(i,:)==1));
 % %     
-% %     % Ground legs:
+    % Ground legs:
 % %     if (sum(strcmp(Flight_raw(i,2:3), Hub)) == 2) ||  (sum(strcmp(Flight_raw(i,2:3), fliplr(Hub))) == 2)
 % %         iground = iground+1;
+% %     end
 % % G.lO(iground) = Flight_raw(i,2);
 % % G.lD(iground) = Flight_raw(i,3);
 % % G.tO(iground) = Flight_num(i,1);
@@ -221,9 +215,6 @@ end
 % % Network(k).G = find(int8(G.K(:,k))==1);
 % % end
 
-% Assign legs to fleet k
-% Network(k).L: array with the index of the flights that belong to fleet k
-
  
 
-save('Data2_prob1')
+save('Data_FAM')

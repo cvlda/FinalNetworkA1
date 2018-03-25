@@ -84,14 +84,6 @@ while Opt_col==0 || Opt_row==0
 end
 
 
-for i=1:length(dv(:,1))
-    itp = recap(dv(i,1),1)+1;
-    itr = recap(dv(i,1),2)+1;
-    
-    
-    
-    
-end
 % Results
 %--------------------------------------------------------------------------
 fprintf('Objective Function:    %6f\n',FVAL)
