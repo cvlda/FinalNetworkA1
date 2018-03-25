@@ -85,11 +85,11 @@ end
 %--------------------------------------------------------------------------
 fprintf('Objective Function:    %6f\n',FVAL)
 
+% Tables 
+%--------------------------------------------------------------------------
 %print flow table for flights between AEP and EZE 
-print_flow_table(dv,delta,it,recap_rate,x_Flight_txt)
+%print_flow_table(dv,delta,it,recap_rate,x_Flight_txt)
 
 %print flow table per itinerary for flights between AEP and EZE 
-
-
-
+%print_flow_table_it(dv,delta,it,recap_rate,x_Flight_txt)
 
