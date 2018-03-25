@@ -42,7 +42,7 @@ function [dv, FVAL, pi, sigma] = solveRPM2(dv,recap_rate,delta,num_flights,...
     % Add rows:        
     Aineq=[Aineq;Aineq7(v_addrow,:)];
     rhs = [rhs;rhs7(v_addrow)];
-    
+        
     % Solve optimization problem
     lb = zeros(numdv,1); 
     ub = []; 

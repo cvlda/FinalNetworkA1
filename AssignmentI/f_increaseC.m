@@ -38,16 +38,14 @@ stop_cond = 0;
 while stop_cond == 0 && it < Maxit
 % B. Solve RMP
 %--------------------------------------------------------------------------
-[f, fval, pi, sigma] = solveRPM(u,C,nK,nA,d,Set,Kp,Ap,s);
+[f, fval, pi, sigma] = solveRPM1(u,C,nK,nA,d,Set,Kp,Ap,s);
 
 
 % C. Modify costs and pricing problem
 %--------------------------------------------------------------------------
 
 cost = C-pi;
-[K, Set, Ap, Kp, stop_cond] = GenerateSet(Oa, Da, nA, Ok, Dk, nK, K, Set, cost, sigma, d);
-stemp2 = sum(Set')'-u;
-s2 = max(0,stemp2);
+[K, Set, Ap, Kp, stop_cond] = GenerateSet(C,pi,Oa, Da, nA, Ok, Dk, nK, K, Set, cost, sigma, d);
 it=it+1;
 end
 

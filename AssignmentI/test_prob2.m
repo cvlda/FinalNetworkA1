@@ -23,7 +23,7 @@ legs=[legs;["", ""]]; %Add ficticious
 
 %It = [no., demand, fare]
 it(:,1)=[1:8]-1;
-it(:,2)=[90 40 90 50 100 80 120 100];
+it(:,2)=[90 400 90 50 100 80 120 100];
 it(:,3) = [150 130 150 130 150 150 100 100];
 
 it=[it;[8,10000,0]]; %Add ficticious itinerary with unlimited demand

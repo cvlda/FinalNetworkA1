@@ -89,21 +89,38 @@ fval
 
 cost = C-pi;
 [K, Set, Ap, Kp, stop_cond] = GenerateSet(C,pi,Oa, Da, nA, Ok, Dk, nK, K, Set, cost, sigma, d);
-stemp2 = sum(Set')'-u;
-s2 = max(0,stemp2);
+
 it=it+1;
 end
 
-% Check optimality condition
- opt_cond = Ap'*(C-pi)-Kp'*(sigma./d);
- n_opt=length(find(round(opt_cond,3)>=0));
+% Results:
+Results.pi = pi;
+Results.sigma = sigma;
+Results.f = f;
+Results.OF = fval;
+Results.Kstructure = K;
 
- nP = length(Set(1,:)); % number of paths
-  if n_opt==nP
-      opt=1;
-  end
+Results.Ap = Ap;
+Results.Kp = Kp;
 
 
+
+% Check optimality conditions
+
+% 1. Primal feasibility:
+
+Results.OC.PrimalF1 = Ap*((Kp'*d).*f(1:end-ns))-u; % <=0
+Results.OC.PrimalF2 = Kp*f(1:end-ns)-1; % =0
+
+% 2. Complementary slackness
+Results.OC.Compslack1 = pi.*(Ap*((Kp'*d).*f(1:end-ns))-u); %=0
+Results.OC.Compslack2 = sigma.*(Kp*f(1:end-ns)-1); %=0
+
+%3. Dual feasibility
+Results.OC.DualFeas =  Ap'*(C-pi)-Kp'*(sigma./d); %>=0
+
+
+save('Results_PathBasedF','-struct', 'Results')
 
 % Results
 %--------------------------------------------------------------------------

@@ -25,7 +25,7 @@ v_addrow = [];
 Aineq_C7 = buildC7(dv, recap_rate, num_it);
 Dp = it(:,2);
 
-C7 = Aineq_C7*dv(:,2)-Dp;
+C7 = Aineq_C7*dv(:,2)-Dp;;
 
 % Check constraint (7)
 j = find(C7>0); % Does not fulfill constraint
