@@ -83,8 +83,8 @@ end
 
 
 for i=1:length(dv(:,1))
-    itp = recap(dv(i,1),1)+1;
-    itr = recap(dv(i,1),2)+1;
+    itp = recap_rate(dv(i,1),1)+1;
+    itr = recap_rate(dv(i,1),2)+1;
     
     
     
