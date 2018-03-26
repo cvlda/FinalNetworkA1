@@ -48,7 +48,7 @@ i=0;
 for k = 1:nK
     
 A7(:,i+1:i+F(k).nL) = I(:,F(k).L);
-i = F(k).nL;
+i = i+F(k).nL;
 end
 b7 = ones(nL,1);
 
@@ -60,7 +60,7 @@ b8 = zeros(ma,1);
 
 ia = 0;
 jaf = 0;
-jag = 0;
+jag = nf;
 for k=1:nK    
     
         Af = zeros(N(k).n, F(k).nL );
@@ -80,11 +80,11 @@ for k=1:nK
         end
         % Nodes of night ground legs
         for i=1:NG(k).nG
-        Ag(NG(k).arc(i,1),i) = 1;
-        Ag(NG(k).arc(i,2),i) = -1;
+        Ag(NG(k).arc(i,1),G(k).nG+i) = 1;
+        Ag(NG(k).arc(i,2),G(k).nG+i) = -1;
         end      
         
-        A8(ia+1:ia+N(k).n, jaf+1:jaf+F(k).nL) = Af;
+        A8(ia+1:ia+N(k).n, jaf+1:jaf+F(k).nL) = Af;      
         A8(ia+1:ia+N(k).n, jag+1:jag+G(k).nG+NG(k).nG) = Ag;
         [ma, naf] = size(Af);
         [~, nag] = size(Ag);
@@ -127,7 +127,7 @@ i=0;
 for k = 1:nK
     
 A10(:,i+1:i+F(k).nL) = - K.seats(k) .* I(:,F(k).L);
-i = F(k).nL;
+i = i+F(k).nL;
 end
 % Legs between Hub airports have different capacities
 [ia,ja] = find(A10(H,:)~=0);

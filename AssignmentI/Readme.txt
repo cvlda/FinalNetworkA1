@@ -10,7 +10,7 @@
 
 Structure for Assignment I source code:
 
-Running data.m files creates data.mat, need for the Excel File sheet.
+Running data.m files creates a data.mat, need for the Excel File sheet.
 
 Problem 1:
 %--------------------------------------------------------------------------
@@ -28,11 +28,6 @@ Data: Data_prob1
 
      Results: Results_PathBasedF.mat  - Optimality conditions are saved in 
                                         a structure OC
-
-1.3. Main: IncreaseCapacity
-
-     Functions library: f_increaseC
-                        Plot_increaseC
 
 Problem 2:
 %--------------------------------------------------------------------------
