@@ -30,7 +30,7 @@ i = 0;
 for k = 1:nK
    
     ObjFun(i+1:i+F(k).nL) = L.c(F(k).L,k);
-    i = F(k).nL;   
+    i = i+F(k).nL;   
     
 end
 
