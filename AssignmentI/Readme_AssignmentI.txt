@@ -10,7 +10,7 @@
 
 Structure for Assignment I source code:
 
-Running data.m files creates a data.mat, need for the Excel File sheet.
+Running data.m files creates a data.mat, needs the Assignment's Excel File sheet.
 
 Problem 1:
 %--------------------------------------------------------------------------
@@ -39,6 +39,10 @@ Data: data_prob2
  
      Functions library: AddColumns
                         AddRows
-                        buildC7       - Constraint (7)
-                        ConstraintC6  - Constraint (6)   
-                        SolveRPM2     - Main solver                     
+                        buildC7       		- Constraint (7)
+                        ConstraintC6  		- Constraint (6)   
+                        SolveRPM2     		- Main solver 
+			print_flow_table	- Calculate flows between hubs
+			print_flow_table_it	- Calculate flows between hubs per
+						  itinerary	
+                    
