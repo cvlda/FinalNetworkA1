@@ -1,4 +1,4 @@
-function [X,P_PMF, FVAL, pi, sigma] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it )
+function [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it )
 
 % Link Problem
 %--------------------------------------------------------------------------
@@ -37,6 +37,14 @@ UB(P_FAM.ndv+1:P_FAM.ndv+P_PMF.ndv) = Inf;
 % Solve Problem
 %--------------------------------------------------------------------------
 [X,FVAL,~,~,lambda] = linprog(ObjFun,Aineq,bineq,Aeq,beq,LB,UB);
+IFAMformulation.ObjFun = ObjFun; 
+IFAMformulation.Aineq = Aineq;
+IFAMformulation.bineq = bineq;
+IFAMformulation.Aeq = Aeq;
+IFAMformulation.beq = beq;
+IFAMformulation.LB = LB;
+IFAMformulation.UB = UB;
+
 pi = -lambda.ineqlin(mFAM+1:m-length(v_addrow));
 
 sigma=zeros(num_it,1);

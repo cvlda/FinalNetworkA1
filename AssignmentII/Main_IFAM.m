@@ -87,7 +87,7 @@ while Opt_col==0 || Opt_row==0
                       it, P_FAM.A10, v_addcol, v_addrow);
                                        
                                        
-         [X,P_PMF, FVAL, pi, sigma] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );
+         [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );
            
     end
     
@@ -108,15 +108,14 @@ while Opt_col==0 || Opt_row==0
                       it, P_FAM.A10, v_addcol, v_addrow);
                                        
                                        
-         [X,P_PMF, FVAL, pi, sigma] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );
-         
+         [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );  
     end
-     
-    
 end
 
 % Reasume MILP
 %--------------------------------------------------------------------------
+[X,FVAL] = solveMILP(X,IFAMformulation); 
+
 
 
 

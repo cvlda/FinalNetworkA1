@@ -22,7 +22,6 @@ nf = sum([F.nL]);               % sum_k(flight legs of k)
 ny = sum([G.nG])+sum([NG.nG]);  % sum_k(ground legs of k and night ground legs of k)
 ndv = nf+ny;  
                   
-
 % Objective function
 %--------------------------------------------------------------------------
 ObjFun = zeros(ndv,1);
