@@ -58,8 +58,9 @@ P_PMF.UB = [];
 %--------------------------------------------------------------------------
 [X,P_PMF, FVAL, pi, sigma] = solveIFAM( P_FAM, P_PMF, [], num_it );
 
-
-
+initial_constraints = 1864 + length(P_PMF.Aineq(:,1));
+initial_variables = length(X);
+initial_objective = FVAL;
 %--------------------------------------------------------------------------
 %                                 Main IFAM
 %--------------------------------------------------------------------------
@@ -134,3 +135,11 @@ end
 %--------------------------------------------------------------------------
 [X,FVAL] = solveMILP(X,IFAMformulation); 
 fval_evolution(iterations+1)=FVAL;
+
+% Plot objective function
+%--------------------------------------------------------------------------
+hold on 
+plot(linspace(0,11,12),horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
+xlabel('Iteration');
+ylabel('Objective value'); 
+hold off
