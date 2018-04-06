@@ -68,14 +68,19 @@ Opt_col = 0;
 Opt_row = 0;
 v_addrow = [] ;
 
-
+iterations = 0;
+%generation_matrix keeps track of added columns and rows for each
+%iteration, in addition to the total number of variables and constraints at
+%every iteration
+%(1,:) are added rows, (2,:) are added columns, (3,:) is total number of
+%constraints, (4,:) is the total number of variables
+generation_matrix = [];
+fval_evolution = [];
 while Opt_col==0 || Opt_row==0
-    
     while Opt_col == 0
                    
         % Solve pricing problem
         [Opt_col, v_addcol] = AddColumns(P_PMF.dv, recap, num_recap,  delta, pi, sigma);
-                
          if Opt_col==1
              break;
          else
@@ -88,7 +93,11 @@ while Opt_col==0 || Opt_row==0
                                        
                                        
          [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );
-           
+         iterations=iterations+1;
+         generation_matrix(2,iterations)=length(v_addcol);
+         generation_matrix(3,iterations)=length(IFAMformulation.Aineq(:,1))+length(IFAMformulation.Aeq(:,1));
+         generation_matrix(4,iterations)=length(IFAMformulation.Aineq(1,:)); 
+         fval_evolution(iterations)=FVAL;
     end
     
     
@@ -96,7 +105,6 @@ while Opt_col==0 || Opt_row==0
     
         % Solve separation problem
          [Opt_row, v_addrow] = AddRows(v_addrow, P_PMF.dv, it, recap, num_it);
-                  
          if Opt_row==1
              break;
          else
@@ -108,15 +116,21 @@ while Opt_col==0 || Opt_row==0
                       it, P_FAM.A10, v_addcol, v_addrow);
                                        
                                        
-         [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );  
+         [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it ); 
+         iterations=iterations+1;
+         %Add number of added rows to matrix 
+         if iterations > 1
+            generation_matrix(1,iterations)=length(v_addrow)-sum(generation_matrix(1,1:iterations-1));
+         else 
+            generation_matrix(1,iterations)=length(v_addrow);
+         end
+         fval_evolution(iterations)=FVAL;
+         generation_matrix(3,iterations)=length(IFAMformulation.Aineq(:,1))+length(IFAMformulation.Aeq(:,1));
+         generation_matrix(4,iterations)=length(IFAMformulation.Aineq(1,:)); 
     end
 end
 
 % Reasume MILP
 %--------------------------------------------------------------------------
 [X,FVAL] = solveMILP(X,IFAMformulation); 
-
-
-
-
-
+fval_evolution(iterations+1)=FVAL;
