@@ -51,11 +51,25 @@ A(nL+1:nL*2) = Flight_raw(:,3);
 Apset = unique(A)';
 nAp = length(Apset);
 
+% Separate ground arcs between Hub airports
+% -------------------------------------------------------------------------- 
+Hub = {'AEP', 'EZE'};
+
+iground = 0;
+for i = 1:nL
+    
+    % Ground legs:
+    if (sum(strcmp(Flight_raw(i,2:3), Hub)) == 2) ||  (sum(strcmp(Flight_raw(i,2:3), fliplr(Hub))) == 2)
+        iground = iground+1;
+        H(iground) = i;
+    end
+end
 
 % Assign flights to fleet:
 %--------------------------------------------------------------------------
     % Ak matrix: rows = legs, cols =  AC type (K)
-    %            1 if leg belongs to AC type / 0 otherwise   
+    %            1 if leg belongs to AC type / 0 otherwise  
+    A_lk = zeros(nL,nK);
 for k = 1:nK
     A_lk(:,k) = not(strcmp(Flight_txt(:,5+k),'NA'));
 end
@@ -147,23 +161,10 @@ for k = 1:nK
 end
        
 
-% Separate ground arcs between Hub airports
-% -------------------------------------------------------------------------- 
-Hub = {'AEP', 'EZE'};
-
-iground = 0;
-for i = 1:nL
-    
-    % Ground legs:
-    if (sum(strcmp(Flight_raw(i,2:3), Hub)) == 2) ||  (sum(strcmp(Flight_raw(i,2:3), fliplr(Hub))) == 2)
-        iground = iground+1;
-        H(iground) = i;
-    end
-end
 
 
-% Separate ground arcs between airports
-% -------------------------------------------------------------------------- 
+% % % Separate ground arcs between hub airports: "flight by BUS"
+% % % -------------------------------------------------------------------------- 
 % % Hub = {'AEP', 'EZE'};
 % % iflight = 0;
 % % iground = 0;
@@ -172,7 +173,7 @@ end
 % %     % Flight assigned to fleet
 % %     j = find((A_lk(i,:)==1));
 % %     
-    % Ground legs:
+% %     Ground legs:
 % %     if (sum(strcmp(Flight_raw(i,2:3), Hub)) == 2) ||  (sum(strcmp(Flight_raw(i,2:3), fliplr(Hub))) == 2)
 % %         iground = iground+1;
 % %     end
@@ -206,7 +207,7 @@ end
 % % 
 % % nL = iflight;
 % % nG = iground;
-% % 
+
 % % % Assign legs to fleet k
 % % % Network(k).L: array with the index of the flights that belong to fleet k
 % % % Network(k).G: array with the index of the ground legs that belong to fleet k

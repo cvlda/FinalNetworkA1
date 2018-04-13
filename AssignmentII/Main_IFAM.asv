@@ -145,15 +145,3 @@ ylabel('Objective value');
 title('Objective Function Evolution')
 grid on
 hold off
-
-% Flights operated by A340
-%--------------------------------------------------------------------------
-load('Data_FAM.mat','F','H')
-A340_legs = F(1).L'.*X(1:F(1).nL);
-
-for i = 1:F(1).nL
-    
-    if sum(A340_legs(i)==H)>0
-        A340_legs(i)=0;
-    end
-end
