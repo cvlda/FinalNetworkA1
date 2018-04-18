@@ -131,7 +131,7 @@ while Opt_col==0 || Opt_row==0
     end
 end
 
-% Reasume MILP
+% Reassume MILP
 %--------------------------------------------------------------------------
 [X,FVAL] = solveMILP(X,IFAMformulation); 
 fval_evolution(iterations+1)=FVAL;
@@ -149,9 +149,10 @@ hold off
 % Flights operated by A340
 %--------------------------------------------------------------------------
 load('Data_FAM.mat','F','H')
-A340_legs = F(1).L'.*X(1:F(1).nL);
+k = 2; % A340 aircraft type
+A340_legs = F(k).L'.*X(1:F(k).nL);
 
-for i = 1:F(1).nL
+for i = 1:F(k).nL
     
     if sum(A340_legs(i)==H)>0
         A340_legs(i)=0;

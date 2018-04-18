@@ -66,8 +66,9 @@ for k=1:nK
         
         % Nodes of flight legs
         for i=1:F(k).nL
-        Af(F(k).O(i),i) = 1;
-        Af(F(k).I(i),i) = -1;
+        Af(F(k).arc(i,1),i) = 1;
+        Af(F(k).arc(i,2),i) = -1;
+
         end
         
         Ag = zeros(N(k).n, G(k).nG + NG(k).nG );

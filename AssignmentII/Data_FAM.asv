@@ -167,19 +167,14 @@ end
 % Ground arcs in A330 aircraft type
 %--------------------------------------------------------------------------
 k = 1;
-% Number of ground arcs between hub airports
-y=0;
+
+% Ground arcs between hub airports
 for i = 1:F(k).nL    
     if sum(F(k).L(i)==H)>0
         y = y+1;
     end
 end
 
-fprintf('Ground arcs in aircraft:    %s\n',Kset{k})
-fprintf('Total ground arc:    %6f\n',y+G(k).nG+NG(k).nG)
-fprintf('Ground arc:    %6f\n',G(k).nG)
-fprintf('Total ground arc:    %6f\n',NG(k).nG)
-fprintf('Arcs between hub airports:    %6f\n',y)
 
 
 
