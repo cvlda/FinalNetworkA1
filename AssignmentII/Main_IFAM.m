@@ -138,23 +138,67 @@ fval_evolution(iterations+1)=FVAL;
 
 % Plot objective function
 %--------------------------------------------------------------------------
-hold on 
-plot(linspace(0,11,12),horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
-xlabel('Iteration');
-ylabel('Objective value'); 
-title('Objective Function Evolution')
-grid on
-hold off
+% hold on 
+% plot(linspace(0,11,12),horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
+% xlabel('Iteration');
+% ylabel('Objective value'); 
+% title('Objective Function Evolution')
+% grid on
+% hold off
 
 % Flights operated by A340
 %--------------------------------------------------------------------------
-load('Data_FAM.mat','F','H')
-k = 2; % A340 aircraft type
-A340_legs = F(k).L'.*X(1:F(k).nL);
+% load('Data_FAM.mat','F','H')
+% k = 2; % A340 aircraft type
+% A340_legs = F(k).L'.*X(1:F(k).nL);
+% 
+% %Correct for flights operated by buses
+% for i = 1:F(k).nL
+%     if sum(A340_legs(i)==H)>0
+%         A340_legs(i)=0;
+%     end
+% end
 
-for i = 1:F(k).nL
-    
-    if sum(A340_legs(i)==H)>0
-        A340_legs(i)=0;
-    end
-end
+%Print A340 flights table
+% fprintf('\\textbf{Flight Number} \\\\ \n')
+% for i = 1:length(A340_legs)
+%     if A340_legs(i)>0
+%         fprintf('%s \\\\ \n', Lset{i})
+%     end
+% end 
+
+% Spilled pax 
+%--------------------------------------------------------------------------
+% Spill = zeros(num_it,1); 
+% Recaptured = zeros(num_it,1); 
+% 
+% for i=2532:length(X)
+%     spilled = X(i); 
+%     
+%     %translate index in X go to index in P_PMF.dv 
+%     P_PMF_dv_index = i - 2531; 
+%     %tranlate index in P_PMF.dv go to index in recap
+%     recap_index = P_PMF.dv(P_PMF_dv_index,1); 
+%       
+%     source = recap(recap_index,1) + 1;  %source it index in it
+%     target = recap(recap_index,2) + 1;  %target it index in it 
+%    
+%     if target==738 %if target is fictitious itinerary
+%         %add spill to fictitious 
+%         Spill(source) = spilled; 
+%     else
+%         Recaptured(source) = Recaptured(source) + spilled;
+%     end  
+% end 
+% 
+% %print latex table 
+% fprintf("Itinerary & Spill \\\\ \n");
+% nonzero = find(Spill);
+% for k=1:length(nonzero)
+%     %k is itinerary index 
+%     element = nonzero(k);
+%     fprintf("$i_{%i}$ & %i \\\\ \n",element-1,round(Spill(element)));
+% end 
+
+
+
