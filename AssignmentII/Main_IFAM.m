@@ -138,26 +138,26 @@ fval_evolution(iterations+1)=FVAL;
 
 % Plot objective function
 %--------------------------------------------------------------------------
-% hold on 
-% plot(linspace(0,11,12),horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
-% xlabel('Iteration');
-% ylabel('Objective value'); 
-% title('Objective Function Evolution')
-% grid on
-% hold off
+hold on 
+plot(linspace(0,11,12),horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
+xlabel('Iteration');
+ylabel('Objective value'); 
+title('Objective Function Evolution')
+grid on
+hold off
 
 % Flights operated by A340
-%--------------------------------------------------------------------------
-% load('Data_FAM.mat','F','H')
-% k = 2; % A340 aircraft type
-% A340_legs = F(k).L'.*X(1:F(k).nL);
-% 
-% %Correct for flights operated by buses
-% for i = 1:F(k).nL
-%     if sum(A340_legs(i)==H)>0
-%         A340_legs(i)=0;
-%     end
-% end
+% --------------------------------------------------------------------------
+load('Data_FAM.mat','F','H')
+k = 2; % A340 aircraft type
+A340_legs = OperatedFlights(F, X, k);
+
+%Correct for flights operated by buses
+for i = 1:F(k).nL
+    if sum(A340_legs(i)==H)>0
+        A340_legs(i)=0;
+    end
+end
 
 %Print A340 flights table
 % fprintf('\\textbf{Flight Number} \\\\ \n')
