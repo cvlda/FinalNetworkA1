@@ -11,5 +11,7 @@ UB(1:nf)=1;
 [x,fval] = intlinprog(IFAMformulation.ObjFun,intcon,...
     IFAMformulation.Aineq,IFAMformulation.bineq,IFAMformulation.Aeq,...
     IFAMformulation.beq,IFAMformulation.LB,UB);
+  
+    
 end 
 

@@ -70,11 +70,11 @@ Opt_row = 0;
 v_addrow = [] ;
 
 iterations = 0;
-%generation_matrix keeps track of added columns and rows for each
-%iteration, in addition to the total number of variables and constraints at
-%every iteration
-%(1,:) are added rows, (2,:) are added columns, (3,:) is total number of
-%constraints, (4,:) is the total number of variables
+% generation_matrix keeps track of added columns and rows for each
+% iteration, in addition to the total number of variables and constraints at
+% every iteration
+% (1,:) are added rows, (2,:) are added columns, (3,:) is total number of
+% constraints, (4,:) is the total number of variables
 generation_matrix = [];
 fval_evolution = [];
 while Opt_col==0 || Opt_row==0

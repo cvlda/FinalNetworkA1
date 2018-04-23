@@ -53,6 +53,10 @@ sigma=zeros(num_it,1);
     if not(isempty(v_addrow))
     sigma(v_addrow) = lambda.ineqlin(m-length(v_addrow)+1:m);
     end
+IFAMformulation.n_pi    = [mFAM+1 m-length(v_addrow)];
+IFAMformulation.n_sigma = [num_it m-length(v_addrow)+1 m];
+
+
 
 P_PMF.dv(:,2)= X(P_FAM.ndv+1:P_FAM.ndv+P_PMF.ndv);
 
