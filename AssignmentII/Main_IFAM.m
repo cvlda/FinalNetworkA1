@@ -133,18 +133,18 @@ end
 
 % Reassume MILP
 %--------------------------------------------------------------------------
-[X,FVAL] = solveMILP(X,IFAMformulation); 
-fval_evolution(iterations+1)=FVAL;
+[X,FVAL,flag] = solveMILP(X,IFAMformulation); 
+iterations=iterations+1;
+fval_evolution(iterations)=FVAL;
 
 % Plot objective function
 %--------------------------------------------------------------------------
-hold on 
-plot(linspace(0,11,12),horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
+figure 
+plot(1:iterations+1,horzcat(initial_objective,fval_evolution),'Color',[0,0.6509,0.8392]); 
 xlabel('Iteration');
 ylabel('Objective value'); 
 title('Objective Function Evolution')
 grid on
-hold off
 
 % Flights operated by A340
 % --------------------------------------------------------------------------
@@ -153,11 +153,11 @@ k = 2; % A340 aircraft type
 A340_legs = OperatedFlights(F, X, k);
 
 %Correct for flights operated by buses
-for i = 1:F(k).nL
-    if sum(A340_legs(i)==H)>0
-        A340_legs(i)=0;
-    end
-end
+% for i = 1:F(k).nL
+%     if sum(A340_legs(i)==H)>0
+%         A340_legs(i)=0;
+%     end
+% end
 
 %Print A340 flights table
 % fprintf('\\textbf{Flight Number} \\\\ \n')

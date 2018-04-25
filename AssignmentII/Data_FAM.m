@@ -51,6 +51,15 @@ A(nL+1:nL*2) = Flight_raw(:,3);
 Apset = unique(A)';
 nAp = length(Apset);
 
+% Assign flights to fleet:
+%--------------------------------------------------------------------------
+    % Ak matrix: rows = legs, cols =  AC type (K)
+    %            1 if leg belongs to AC type / 0 otherwise  
+    A_lk = zeros(nL,nK);
+for k = 1:nK
+    A_lk(:,k) = not(strcmp(Flight_txt(:,5+k),'NA'));
+end
+
 % Separate ground arcs between Hub airports
 % -------------------------------------------------------------------------- 
 Hub = {'AEP', 'EZE'};
@@ -62,16 +71,9 @@ for i = 1:nL
     if (sum(strcmp(Flight_raw(i,2:3), Hub)) == 2) ||  (sum(strcmp(Flight_raw(i,2:3), fliplr(Hub))) == 2)
         iground = iground+1;
         H(iground) = i;
+        
+        L.c(i, A_lk(i,:)==1 ) = 4500; % Cost of flights operated by buses
     end
-end
-
-% Assign flights to fleet:
-%--------------------------------------------------------------------------
-    % Ak matrix: rows = legs, cols =  AC type (K)
-    %            1 if leg belongs to AC type / 0 otherwise  
-    A_lk = zeros(nL,nK);
-for k = 1:nK
-    A_lk(:,k) = not(strcmp(Flight_txt(:,5+k),'NA'));
 end
 
 % Nodes (N(k).t / N(k).l) and flight legs (F(k).L) associated to fleet:
