@@ -132,13 +132,8 @@ end
 % Legs between Hub airports have different capacities
 [ia,ja] = find(A10(H,:)~=0);
 for i=1:length(ia)
-    for j=1:length(ja)
-        A10(ia(i),ja(j)) = - 4*54; % 4 buses with 54 seats each
-    end
+        A10(ia(i),ja(i)) = - 4*54; % 4 buses with 54 seats each
 end
-
-
-
 
 % Boundaries
 %--------------------------------------------------------------------------

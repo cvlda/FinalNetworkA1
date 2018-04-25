@@ -47,11 +47,11 @@ IFAMformulation.UB = UB;
 
 
 
-pi = -lambda.ineqlin(mFAM+1:m-length(v_addrow));
+pi = lambda.ineqlin(mFAM+1:m-length(v_addrow));
 
 sigma=zeros(num_it,1);
     if not(isempty(v_addrow))
-    sigma(v_addrow) = lambda.ineqlin(m-length(v_addrow)+1:m);
+    sigma(v_addrow) = -lambda.ineqlin(m-length(v_addrow)+1:m);
     end
 
 P_PMF.dv(:,2)= X(P_FAM.ndv+1:P_FAM.ndv+P_PMF.ndv);
