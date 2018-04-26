@@ -47,7 +47,7 @@ IFAMformulation.UB = UB;
 
 
 
-pi = lambda.ineqlin(mFAM+1:m-length(v_addrow));
+pi = - lambda.ineqlin(mFAM+1:m-length(v_addrow));
 
 sigma=zeros(num_it,1);
     if not(isempty(v_addrow))

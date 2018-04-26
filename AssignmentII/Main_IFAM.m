@@ -147,11 +147,16 @@ title('Objective Function Evolution')
 grid on
 
 % Flights operated by A340
-% --------------------------------------------------------------------------
+% -------------------------------------------------------------------------
 load('Data_FAM.mat','F','H')
 k = 2; % A340 aircraft type
 A340_legs = OperatedFlights(F, X, k);
 
+% Flights operated by B737 and B738
+% --------------------------------------------------------------------------
+B73_legs = sort([round(nonzeros(OperatedFlights(F, X, 3))); round(nonzeros(OperatedFlights(F, X, 4)))]); 
+
+save('B73','B73_legs')
 %Correct for flights operated by buses
 % for i = 1:F(k).nL
 %     if sum(A340_legs(i)==H)>0
