@@ -1,4 +1,4 @@
-function [x,fval,flag] = solveMILP(X,IFAMformulation) 
+function [x,fval] = solveMILP(X,IFAMformulation) 
 %All decision variables (f^k_i, y^k_r and t^r_p) should be integer
 intcon = linspace(1,length(X),length(X));
 
@@ -9,7 +9,7 @@ UB = IFAMformulation.UB;
 UB(1:nf)=1;
 % options = optimoptions('intlinprog','Display','off');
  
-[x,fval,flag] = intlinprog(IFAMformulation.ObjFun,intcon,...
+[x,fval] = intlinprog(IFAMformulation.ObjFun,intcon,...
     IFAMformulation.Aineq,IFAMformulation.bineq,IFAMformulation.Aeq,...
     IFAMformulation.beq,IFAMformulation.LB,UB);
   
