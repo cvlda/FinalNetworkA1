@@ -90,7 +90,7 @@ while Opt_col==0 || Opt_row==0
     
         % Column generation
           P_PMF = PMF(P_FAM.ndv, P_PMF.dv, recap, delta, nL, num_it,...
-                      it, P_FAM.A10, v_addcol, v_addrow);
+                      it, P_FAM.A10, v_addcol, 1, v_addrow);
                                        
                                        
          [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it );
@@ -114,7 +114,7 @@ while Opt_col==0 || Opt_row==0
          
         % Row generation
           P_PMF = PMF(P_FAM.ndv, P_PMF.dv, recap, delta, nL, num_it,...
-                      it, P_FAM.A10, v_addcol, v_addrow);
+                      it, P_FAM.A10, v_addcol, 1, v_addrow);
                                        
                                        
          [X,P_PMF, FVAL, pi, sigma,IFAMformulation] = solveIFAM( P_FAM, P_PMF, v_addrow, num_it ); 
@@ -151,7 +151,8 @@ grid on
 load('Data_FAM.mat','F','H')
 k = 2; % A340 aircraft type
 A340_legs = OperatedFlights(F, X, k);
-
+B737_legs = OperatedFlights(F, X, 3);
+B738_legs = OperatedFlights(F, X, 4);
 % Flights operated by B737 and B738
 % --------------------------------------------------------------------------
 B73_legs = sort([round(nonzeros(OperatedFlights(F, X, 3))); round(nonzeros(OperatedFlights(F, X, 4)))]); 

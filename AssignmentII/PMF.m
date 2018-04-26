@@ -9,7 +9,7 @@
 %--------------------------------------------------------------------------
 
 function P_PMF = PMF(ndv_FAM, dv, recap, delta, num_flights, num_it,...
-                     it, A10_FAM, v_addcol, v_addrow)
+                     it, A10_FAM, v_addcol, flagcol, v_addrow)
                                        
 % The size of this problem is for ndv_FAM+ndv_PMF
 
@@ -17,8 +17,10 @@ function P_PMF = PMF(ndv_FAM, dv, recap, delta, num_flights, num_it,...
     ndv=length(dv(:,1)); 
 
     % Add Columns:
+    if flagcol==1
     dv(ndv+1:ndv+length(v_addcol),1) = v_addcol;
     ndv=ndv+length(v_addcol);
+    end
     
     num_recap = length(recap(:,1));
     p=recap(:,1);
