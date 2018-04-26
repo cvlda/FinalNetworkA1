@@ -35,12 +35,11 @@ Problem 1:
 Problem 2:
 %--------------------------------------------------------------------------
 
-Data: data_prob2
-      test_prob2 - aimed for validation
+Data: B73_legs (created by running Main_IFAM)
 
-1.1 Main: MixFlowProblem
+Main: Main_CrewPairings
  
-     Functions library: Duty Time
-                        find_all_paths
-                        Main_CrewPairing
-                        neighbors  
+Functions library: DutyTime		- Calculates duration of a duty
+                   find_all_paths	- Finds all possible paths 
+	           print_new_solutions  - Helper function for find_all_paths
+                   neighbors  		- Finds neighbours of a current solution	
